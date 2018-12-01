@@ -2,17 +2,75 @@ import React, { Component } from 'react';
 import albumData from './../data/albums';
 
 class Album extends Component {
-  constructor(props) {
-     super(props);
+   constructor(props) {
+        super(props);
 
-     const album = albumData.find( album => {
-        return album.slug === this.props.match.params.slug
-      });
+        const album = albumData.find( album => {
+          return album.slug === this.props.match.params.slug
+        });
 
-      this.state = {
-        album: album
-      };
-  }
+        this.state = {
+          album: album,
+          currentSong: album.songs[0],
+          isPlaying: false
+        };
+
+        this.audioElement = document.createElement('audio');
+        this.audioElement.src = album.songs[0].audioSrc;
+   }
+
+   play() {
+        this.audioElement.play();
+        this.setState({
+          isPlaying: true
+        });
+   }
+
+   pause() {
+        this.audioElement.pause();
+        this.setState({
+          isPlaying: false
+        });
+   }
+
+   setSong(song) {
+        this.audioElement.src = song.audioSrc;
+        this.setState({
+          currentSong: song
+        });
+   }
+
+   handleSongClick(song) {
+     const isSameSong = this.state.currentSong === song;
+     if (this.state.isPlaying && isSameSong) {
+       this.pause();
+     } else {
+       if (!isSameSong) { this.setSong(song); }
+       this.play();
+     }
+   }
+
+   mouseEnter(song) {
+        this.setState({
+          isHovering: song
+        });
+   }
+
+   mouseLeave(song) {
+        this.setState({
+          isHovering: null
+        })
+   }
+
+   iconChange(song, index){
+         if (this.state.isHovering !== song) {
+           return (<td>{index + 1}</td>);
+       } else if (this.state.isHovering === song && this.state.isPlaying !== true) {
+           return (<span className="ion-play"></span>);
+       } else if (this.state.isPlaying === true) {
+         return (<span className="ion-pause"></span>);
+       }
+   }
 
   render() {
     return (
@@ -32,11 +90,25 @@ class Album extends Component {
             <col id="song-duration-column" />
           </colgroup>
           <tbody>
+               {
+                 this.state.album.songs.map( (song, index) =>
+                  <tr className="song"
+                     key={index}
+                     onClick={() => this.handleSongClick(song)}
+                     onMouseEnter={() => this.mouseEnter(song)}
+                     onMouseLeave={() => this.mouseLeave(song)}>
+                   <td>{this.iconChange(song, index)}</td>
+                   <td>{song.title}</td>
+                   <td>{song.duration} sec</td>
+                 </tr>
+                )
+              }
           </tbody>
         </table>
       </section>
     );
   }
 }
+
 
 export default Album;
