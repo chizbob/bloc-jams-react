@@ -63,7 +63,7 @@ class Album extends Component {
         })
    }
 
-   iconChange(song, index){
+    iconChange(song, index){
          if (this.state.isHovering !== song) {
            return (<td>{index + 1}</td>);
        } else if (this.state.isHovering === song && this.state.isPlaying !== true) {
@@ -71,15 +71,23 @@ class Album extends Component {
        } else if (this.state.isPlaying === true) {
          return (<span className="ion-pause"></span>);
        }
-   }
+    }
 
-   handlePrevClick(){
-        const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
-        const newIndex = Math.max(0, currentIndex - 1);
-        const newSong = this.state.album.songs[newIndex];
-        this.setSong(newSong);
-        this.play();
-   }
+    handlePrevClick(){
+          const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+          const newIndex = Math.max(0, currentIndex - 1);
+          const newSong = this.state.album.songs[newIndex];
+          this.setSong(newSong);
+          this.play();
+    }
+
+    handleNextClick(){
+          const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+          const nextIndex = Math.min(this.state.album.songs.length - 1, currentIndex + 1);
+          const nextSong = this.state.album.songs[nextIndex];
+          this.setSong(nextSong);
+          this.play();
+    }
 
     render() {
       return (
@@ -118,7 +126,8 @@ class Album extends Component {
              isPlaying={this.state.isPlaying}
              currentSong={this.state.currentSong}
              handleSongClick={() => this.handleSongClick(this.state.currentSong)}
-             handlePrevClick={() => this.handlePrevClick()} />
+             handlePrevClick={() => this.handlePrevClick()}
+             handleNextClick={() => this.handleNextClick()} />
         </section>
       );
     }
