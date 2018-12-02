@@ -13,35 +13,56 @@ class Album extends Component {
         this.state = {
           album: album,
           currentSong: album.songs[0],
-          isPlaying: false
+          isPlaying: false,
+          currentTime: 0,
+          duration: album.songs[0].duration,
         };
 
         this.audioElement = document.createElement('audio');
         this.audioElement.src = album.songs[0].audioSrc;
-   }
+    }
 
-   play() {
+    play() {
         this.audioElement.play();
         this.setState({
           isPlaying: true
         });
-   }
+    }
 
-   pause() {
+    pause() {
         this.audioElement.pause();
         this.setState({
           isPlaying: false
         });
-   }
+    }
 
-   setSong(song) {
+    componentDidMount() {
+        this.eventListeners = {
+            timeupdate: e => {
+              this.setState({ currentTime: this.audioElement.currentTime });
+            },
+            durationchange: e => {
+              this.setState({ duration: this.audioElement.duration });
+            }
+        };
+        this.audioElement.addEventListener('timeupdate', this.eventListeners.timeupdate);
+        this.audioElement.addEventListener('durationchange', this.eventListeners.durationchange);
+    }
+
+    componentWillUnmount() {
+       this.audioElement.src = null;
+       this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
+       this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
+    }
+
+    setSong(song) {
         this.audioElement.src = song.audioSrc;
         this.setState({
           currentSong: song
         });
-   }
+    }
 
-   handleSongClick(song) {
+    handleSongClick(song) {
      const isSameSong = this.state.currentSong === song;
      if (this.state.isPlaying && isSameSong) {
        this.pause();
@@ -49,21 +70,21 @@ class Album extends Component {
        if (!isSameSong) { this.setSong(song); }
        this.play();
      }
-   }
+    }
 
-   mouseEnter(song) {
+    mouseEnter(song) {
         this.setState({
           isHovering: song
         });
-   }
+    }
 
-   mouseLeave(song) {
+    mouseLeave(song) {
         this.setState({
           isHovering: null
         })
-   }
+    }
 
-   iconChange(song, index){
+    handleIcon(song, index){
          if (this.state.isHovering !== song) {
            return (<td>{index + 1}</td>);
        } else if (this.state.isHovering === song && this.state.isPlaying !== true) {
@@ -71,15 +92,29 @@ class Album extends Component {
        } else if (this.state.isPlaying === true) {
          return (<span className="ion-pause"></span>);
        }
-   }
+    }
 
-   handlePrevClick(){
+    handlePrevClick(){
         const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
         const newIndex = Math.max(0, currentIndex - 1);
         const newSong = this.state.album.songs[newIndex];
         this.setSong(newSong);
         this.play();
-   }
+    }
+
+    handleNextClick(){
+          const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+          const nextIndex = Math.min(this.state.album.songs.length - 1, currentIndex + 1);
+          const nextSong = this.state.album.songs[nextIndex];
+          this.setSong(nextSong);
+          this.play();
+    }
+
+    handleTimeChange(e) {
+         const newTime = this.audioElement.duration * e.target.value;
+         this.audioElement.currentTime = newTime;
+         this.setState({ currentTime: newTime });
+    }
 
     render() {
       return (
@@ -106,7 +141,7 @@ class Album extends Component {
                        onClick={() => this.handleSongClick(song)}
                        onMouseEnter={() => this.mouseEnter(song)}
                        onMouseLeave={() => this.mouseLeave(song)}>
-                     <td>{this.iconChange(song, index)}</td>
+                     <td>{this.handleIcon(song, index)}</td>
                      <td>{song.title}</td>
                      <td>{song.duration} sec</td>
                    </tr>
@@ -118,7 +153,10 @@ class Album extends Component {
              isPlaying={this.state.isPlaying}
              currentSong={this.state.currentSong}
              handleSongClick={() => this.handleSongClick(this.state.currentSong)}
-             handlePrevClick={() => this.handlePrevClick()} />
+             handlePrevClick={() => this.handlePrevClick()}
+             currentTime={this.state.currentTime}
+             duration={this.state.duration}
+             handleTimeChange={(e) => this.handleTimeChange(e)}/>
         </section>
       );
     }
