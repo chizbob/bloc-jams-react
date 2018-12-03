@@ -120,10 +120,24 @@ class Album extends Component {
     handleVolumeChange(e) {
          this.audioElement.volume = e.target.value;
     }
-
-    formatTime(duration) {
-         return Math.floor(duration / 60) + ":" + Math.floor(duration % 60)
-    }
+    
+    formatTime(tis) {
+         if (isNaN(tis)){
+           return "-:--";
+         } else {
+         let minutes = Math.floor(tis / 60);
+         let seconds = Math.floor(tis % 60);
+         let time = minutes + ":" + seconds;
+         if (seconds < 10) {
+           return minutes + ":0" + seconds;
+         } else {
+           return time;
+         }
+         };
+       }
+    // formatTime(duration) {
+    //      return Math.floor(duration / 60) + ":" + Math.floor(duration % 60)
+    // }
 
     render() {
       return (
