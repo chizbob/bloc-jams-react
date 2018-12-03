@@ -16,10 +16,7 @@ class Album extends Component {
           isPlaying: false,
           currentTime: 0,
           duration: album.songs[0].duration,
-<<<<<<< HEAD
-=======
-          currentVolume: 0.8,
->>>>>>> assignment-jams9-range
+          currentVolume: 0.8
         };
 
         this.audioElement = document.createElement('audio');
