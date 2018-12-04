@@ -16,7 +16,7 @@ class Album extends Component {
           isPlaying: false,
           currentTime: 0,
           duration: album.songs[0].duration,
-          currentVolume: 0.8
+          currentVolume: 0.8,
         };
 
         this.audioElement = document.createElement('audio');
@@ -86,12 +86,14 @@ class Album extends Component {
     }
 
     handleIcon(song, index){
-         if (this.state.isHovering !== song) {
-           return (<td>{index + 1}</td>);
-       } else if (this.state.isHovering === song && this.state.isPlaying !== true) {
+         if (this.state.isHovering === song) {
            return (<span className="ion-play"></span>);
-       } else if (this.state.isPlaying === true) {
-         return (<span className="ion-pause"></span>);
+       } else if (this.state.currentSong === song && this.state.isPlaying) {
+           return (<span className="ion-pause"></span>);
+       } else if (this.state.isHovering === index && !this.state.isPlaying) {
+         return (<span className="ion-play"></span>);
+       } else {
+           return (index+1);
        }
     }
 
@@ -104,11 +106,11 @@ class Album extends Component {
     }
 
     handleNextClick(){
-          const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
-          const nextIndex = Math.min(this.state.album.songs.length - 1, currentIndex + 1);
-          const nextSong = this.state.album.songs[nextIndex];
-          this.setSong(nextSong);
-          this.play();
+        const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+        const nextIndex = Math.min(this.state.album.songs.length - 1, currentIndex + 1);
+        const nextSong = this.state.album.songs[nextIndex];
+        this.setSong(nextSong);
+        this.play();
     }
 
     handleTimeChange(e) {
@@ -120,6 +122,13 @@ class Album extends Component {
     handleVolumeChange(e) {
          this.audioElement.volume = e.target.value;
     }
+
+    // formatTime(time) {
+		// var minutes = Math.floor(time / 60);
+   	// 	var seconds = Math.floor(time % 60);
+		// if (time === isNaN) return ("-:--")
+    //     else return (seconds < 10 ? (`${minutes}:0${seconds}`) : (`${minutes}:${seconds}`));
+		// }
 
     formatTime(duration) {
          return Math.floor(duration / 60) + ":" + Math.floor(duration % 60)
