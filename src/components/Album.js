@@ -131,8 +131,11 @@ class Album extends Component {
 		// }
 
     formatTime(duration) {
-         return Math.floor(duration / 60) + ":" + Math.floor(duration % 60)
-    }
+		    let min = Math.floor(duration / 60);
+   		  let sec = Math.floor(duration % 60);
+        //console.log(this.state.currentTime);
+        return (sec < 10) ? (`${min}:0${sec}`) : (`${min}:${sec}`);
+	  }
 
     render() {
       return (
@@ -172,12 +175,13 @@ class Album extends Component {
              currentSong={this.state.currentSong}
              handleSongClick={() => this.handleSongClick(this.state.currentSong)}
              handlePrevClick={() => this.handlePrevClick()}
+             handleNextClick={() => this.handleNextClick()}
              currentTime={this.audioElement.currentTime}
              duration={this.audioElement.duration}
              currentVolume={this.audioElement.currentVolume}
              handleTimeChange={(e) => this.handleTimeChange(e)}
              handleVolumeChange={(e) => this.handleVolumeChange(e)}
-             formatTime={() => this.formatTime(this.state.duration)} />
+             formatTime={(e) => this.formatTime(e)} />
         </section>
       );
     }
