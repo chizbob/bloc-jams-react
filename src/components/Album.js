@@ -86,12 +86,14 @@ class Album extends Component {
     }
 
     handleIcon(song, index){
-         if (this.state.isHovering !== song) {
-           return (<td>{index + 1}</td>);
-       } else if (this.state.isHovering === song && this.state.isPlaying !== true) {
+         if (this.state.isHovering === song) {
            return (<span className="ion-play"></span>);
-       } else if (this.state.isPlaying === true) {
-         return (<span className="ion-pause"></span>);
+       } else if (this.state.currentSong === song && this.state.isPlaying) {
+           return (<span className="ion-pause"></span>);
+       } else if (this.state.isHovering === index && !this.state.isPlaying) {
+         return (<span className="ion-play"></span>);
+       } else {
+           return (index+1);
        }
     }
 
@@ -120,24 +122,13 @@ class Album extends Component {
     handleVolumeChange(e) {
          this.audioElement.volume = e.target.value;
     }
-    
-    formatTime(tis) {
-         if (isNaN(tis)){
-           return "-:--";
-         } else {
-         let minutes = Math.floor(tis / 60);
-         let seconds = Math.floor(tis % 60);
-         let time = minutes + ":" + seconds;
-         if (seconds < 10) {
-           return minutes + ":0" + seconds;
-         } else {
-           return time;
-         }
-         };
-       }
-    // formatTime(duration) {
-    //      return Math.floor(duration / 60) + ":" + Math.floor(duration % 60)
-    // }
+
+    formatTime(duration) {
+		    let min = Math.floor(duration / 60);
+   		  let sec = Math.floor(duration % 60);
+        //console.log(this.state.currentTime);
+        return (sec < 10) ? (`${min}:0${sec}`) : (`${min}:${sec}`);
+	  }
 
     render() {
       return (
@@ -182,7 +173,7 @@ class Album extends Component {
              currentVolume={this.audioElement.currentVolume}
              handleTimeChange={(e) => this.handleTimeChange(e)}
              handleVolumeChange={(e) => this.handleVolumeChange(e)}
-             formatTime={() => this.formatTime(this.state.duration)} />
+             formatTime={(e) => this.formatTime(e)} />
         </section>
       );
     }
