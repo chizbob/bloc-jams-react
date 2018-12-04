@@ -12,7 +12,7 @@ class App extends Component {
       <div className="App">
         <header>
          <nav>
-               <Link to='/'>Landing</Link>
+               <Link to='/'>Landing</Link>{' '}
                <Link to='/library'>Library</Link>
          </nav>
          <h1>Bloc Jams</h1>
