@@ -73,9 +73,9 @@ class Album extends Component {
      }
     }
 
-    mouseEnter(song) {
+    mouseEnter(index) {
         this.setState({
-          isHovering: song
+          isHovering: index
         });
     }
 
@@ -85,17 +85,19 @@ class Album extends Component {
         })
     }
 
+
     handleIcon(song, index){
-         if (this.state.isHovering === song) {
-           return (<span className="ion-play"></span>);
-       } else if (this.state.currentSong === song && this.state.isPlaying) {
-           return (<span className="ion-pause"></span>);
-       } else if (this.state.isHovering === index && !this.state.isPlaying) {
-         return (<span className="ion-play"></span>);
-       } else {
-           return (index+1);
-       }
+          if (!this.state.isPlaying && this.state.isHovering === song) {
+              return (<span className="ion-play"></span>);
+          } else if (this.state.isPlaying && this.state.currentSong === song){
+                return (<span className="ion-pause"></span>);
+            } else if (this.state.isPlaying && this.state.isHovering === song){
+                return (<span className="ion-play"></span>);
+              } else {
+                return (index+1);
+              }
     }
+
 
     handlePrevClick(){
         const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
@@ -123,17 +125,9 @@ class Album extends Component {
          this.audioElement.volume = e.target.value;
     }
 
-    // formatTime(time) {
-		// var minutes = Math.floor(time / 60);
-   	// 	var seconds = Math.floor(time % 60);
-		// if (time === isNaN) return ("-:--")
-    //     else return (seconds < 10 ? (`${minutes}:0${seconds}`) : (`${minutes}:${seconds}`));
-		// }
-
     formatTime(duration) {
 		    let min = Math.floor(duration / 60);
    		  let sec = Math.floor(duration % 60);
-        //console.log(this.state.currentTime);
         return (sec < 10) ? (`${min}:0${sec}`) : (`${min}:${sec}`);
 	  }
 
