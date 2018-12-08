@@ -9,24 +9,25 @@ import Album from './components/Album';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="container">
         <header>
-         <nav>
-               <Link to='/'>Landing</Link>{' '}
-               <Link to='/library'>Library</Link>
-         </nav>
-         <h1>Bloc Jams</h1>
+           <nav className="navbar navbar-expand-lg navbar-light bg-light">
+               <a className="nav-item nav-link active" href='/'><img src="./../assets/images/bloc_jams_logo.png" alt="Bloc Jams Landing" /><span className="sr-only">(current)</span></a>
+               <a className="nav-item nav-link" href='/library'>Library</a>
+           </nav>
+
+           <h1>Bloc Jams</h1>
 
         </header>
-       <main>
+        <main>
             <Route exact path="/" component={Landing} />
             <Route path="/library" component={Library} />
             <Route path="/album/:slug" component={Album} />
-
-       </main>
+        </main>
       </div>
     );
   }
 }
+
 
 export default App;

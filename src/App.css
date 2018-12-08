@@ -2,13 +2,7 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,25 +16,39 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 h1 {
   text-transform: uppercase;
   font-size: 40px;
   color: blue;
 }
 
-.navigation {
+#navigation {
   text-transform: uppercase;
   margin: 20px;
 }
 
 .landing-link {
   margin: 20px;
+}
+
+.song-list {
+  text-align: center;
+}
+
+.card-img-top {
+  width: 200px;
+}
+
+.row {
+  float: left;
+  width: 20%;
+  padding: 0 10px;
+}
+
+.albumImg {
+  width: 200px;
+}
+
+#album-cover-art {
+  width: 200px;
 }
