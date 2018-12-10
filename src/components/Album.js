@@ -133,7 +133,7 @@ class Album extends Component {
 
     render() {
       return (
-        <section className="album">
+        <section className="container">
           <section id="album-info">
              <img id="album-cover-art" src={this.state.album.albumCover} alt={this.state.album.title}/>
              <div className="album-details">
