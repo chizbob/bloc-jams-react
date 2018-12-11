@@ -5,3 +5,9 @@
 .card{
   margin-right: 5px;
 }
+
+.card-img-top{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

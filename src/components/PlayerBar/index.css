@@ -1,3 +1,43 @@
 .player-bar{
+  display: block;
+  flex-diretion: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+#buttons{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#time-control{
   display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#volume-control{
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.current-time{
+  margin-right: 25px;
+}
+
+.total-time{
+  margin-left: 25px;
+}
+
+.seek-bar{
+  margin-left: 25px;
+  margin-right: 25px;
+  align-items: center;
 }

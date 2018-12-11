@@ -133,16 +133,16 @@ class Album extends Component {
 
     render() {
       return (
-        <section className="container">
-          <section id="album-info">
-             <img id="album-cover-art" src={this.state.album.albumCover} alt={this.state.album.title}/>
+        <section className="container" style={{width: 50 + '%'}}>
+          <section id="album-info" style={{marginBottom: 50 + 'px', textAlign: 'center'}}>
+             <img id="album-cover-art" style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} src={this.state.album.albumCover} alt={this.state.album.title}/>
              <div className="album-details">
                <h1 id="album-title">{this.state.album.title}</h1>
                <h2 className="artist">{this.state.album.artist}</h2>
                <div id="release-info">{this.state.album.releaseInfo}</div>
              </div>
           </section>
-          <table id="song-list">
+          <table class="table" style={{marginBottom: 50 + 'px'}}>
             <colgroup>
               <col id="song-number-column" />
               <col id="song-title-column" />
