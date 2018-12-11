@@ -17,7 +17,7 @@ import './index.css';
               </button>
           </section>
           <section id="time-control">
-              <div className="current-time">{this.props.formatTime(this.props.currentTime)}</div>
+              <div className="col-narrow">{this.props.formatTime(this.props.currentTime)}</div>
                  <input
                    type="range"
                    className="seek-bar"
@@ -26,10 +26,10 @@ import './index.css';
                    min="0"
                    step="0.01"
                    onChange={this.props.handleTimeChange}/>
-              <div className="total-time">{this.props.formatTime(this.props.duration)}</div>
+              <div className="col-narrow">{this.props.formatTime(this.props.duration)}</div>
           </section>
           <section id="volume-control">
-              <div className="icon ion-volume-low"></div>
+              <div className="icon ion-volume-low col-narrow"></div>
               <input
                 type="range"
                 className="seek-bar"
@@ -38,7 +38,7 @@ import './index.css';
                 min="0"
                 step="0.01"
                 onChange={this.props.handleVolumeChange}/>
-              <div className="icon ion-volume-high"></div>
+              <div className="icon ion-volume-high col-narrow"></div>
           </section>
        </section>
      );

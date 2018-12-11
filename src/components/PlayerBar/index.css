@@ -28,16 +28,13 @@
   text-align: center;
 }
 
-.current-time{
-  margin-right: 25px;
-}
-
-.total-time{
-  margin-left: 25px;
-}
-
 .seek-bar{
   margin-left: 25px;
   margin-right: 25px;
   align-items: center;
+}
+
+.col-narrow{
+  width: 150px;
+  padding: 10px;
 }
